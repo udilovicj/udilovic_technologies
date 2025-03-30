@@ -1,4 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Udilovic Technologies Portfolio
+
+A modern portfolio website built with Next.js, TypeScript, and Tailwind CSS. This portfolio showcases projects, skills, and contact information with sleek animations and responsive design.
+
+## Features
+
+- Responsive design for all device sizes
+- Modern UI with Framer Motion animations
+- Interactive projects section with category filtering
+- Skills section with proficiency indicators
+- Contact form for easy communication
+- Optimized performance for smooth user experience
+
+## Technologies Used
+
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- React Hooks
 
 ## Getting Started
 
