@@ -1,26 +1,337 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground: 245, 245, 247;
+  --background: 10, 10, 10;
+  --accent: 41, 128, 185;
+  --secondary-accent: 119, 149, 185;
+  --surface: 24, 24, 27;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  body {
+    @apply font-sans min-h-screen overflow-x-hidden bg-[#0a0a0a] text-[#f5f5f7];
+    font-feature-settings: "salt", "ss01", "ss02", "cv01", "cv02", "cv03";
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+  }
+  
+  /* Ensure content sections have smooth transitions */
+  section {
+    @apply relative z-10 transition-opacity duration-300;
+    transform: translateZ(0); /* Force GPU acceleration for smoother scrolling */
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-light tracking-wide leading-tight;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  h1 {
+    @apply text-4xl sm:text-5xl md:text-7xl font-extralight;
+  }
+
+  h2 {
+    @apply text-2xl sm:text-3xl md:text-5xl;
+  }
+  
+  /* Enable smooth scrolling for better transitions */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Selection styling */
+  ::selection {
+    @apply bg-[#4BB4FF]/30 text-[#f5f5f7];
+  }
+
+  /* Hide background overflows for smoother rendering */
+  .hide-overflow-background {
+    mask-image: linear-gradient(to bottom, 
+      rgba(0, 0, 0, 1) 0%, 
+      rgba(0, 0, 0, 1) 95%, 
+      rgba(0, 0, 0, 0) 100%
+    );
+    -webkit-mask-image: linear-gradient(to bottom, 
+      rgba(0, 0, 0, 1) 0%, 
+      rgba(0, 0, 0, 1) 95%, 
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn-primary {
+    @apply px-4 sm:px-6 py-3 bg-transparent border border-[#4BB4FF] text-[#f5f5f7] font-light text-sm 
+    tracking-wider uppercase hover:tracking-widest transition-all duration-300 ease-in-out;
+  }
+  
+  .btn-secondary {
+    @apply px-4 sm:px-6 py-3 bg-transparent border border-gray-700 text-[#f5f5f7] font-light text-sm
+    tracking-wider uppercase hover:tracking-widest hover:border-[#f5f5f7] transition-all duration-300 ease-in-out;
+  }
+  
+  .section {
+    @apply w-full py-16 sm:py-24 md:py-32 px-4 sm:px-6;
+  }
+  
+  .container-narrow {
+    @apply max-w-3xl mx-auto px-4 sm:px-6;
+  }
+  
+  .container-wide {
+    @apply max-w-6xl mx-auto px-4 sm:px-6;
+  }
+
+  .divider {
+    @apply w-16 h-0.5 bg-[#4BB4FF]/50 my-6 sm:my-8;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-2 bg-transparent border border-gray-700 font-light text-[#f5f5f7] 
+    focus:outline-none focus:border-[#4BB4FF] transition-all rounded-md;
+  }
+  
+  .card {
+    @apply bg-[#18181b] border border-gray-800 overflow-hidden 
+    transition-all duration-300 hover:border-[#4BB4FF]/30 hover:translate-y-[-5px] hover:shadow-lg hover:shadow-[#4BB4FF]/5 rounded-lg;
+  }
+  
+  .gradient-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-[#4BB4FF] to-[#7795b9];
+    background-size: 200% 200%;
+    animation: gradientTextShift 8s ease infinite;
+  }
+  
+  .nav-link {
+    @apply text-gray-400 hover:text-[#f5f5f7] tracking-wider uppercase text-sm 
+    transition-all duration-300 relative after:absolute after:w-0 after:h-[1px] 
+    after:bg-[#4BB4FF] after:left-0 after:right-0 after:-bottom-1 
+    hover:after:w-full after:transition-all after:duration-300;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  /* Improve touch targets for better mobile experience */
+  button, a {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Reduce motion for better performance on lower-end devices */
+  .reduce-motion {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  /* Adjust scrolling behavior */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Better form element handling on mobile */
+  input, textarea, select {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+  }
+}
+
+/* Basic animations */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-fade-in-delay-1 {
+  animation: fadeIn 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fadeIn 0.8s ease-out 0.4s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Shifting gradient animation */
+@keyframes gradientTextShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Floating animation for elements */
+.animate-float {
+  animation: floatingAnimation 3s ease-in-out infinite;
+}
+
+@keyframes floatingAnimation {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Shimmer effect for buttons and card hover */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: shimmerAnimation 3s infinite;
+}
+
+@keyframes shimmerAnimation {
+  0% {
+    transform: translateX(-100%) rotate(30deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(30deg);
+  }
+}
+
+/* Blinking cursor animation */
+.blinking-cursor {
+  animation: blinkingCursor 1s step-end infinite;
+}
+
+@keyframes blinkingCursor {
+  from, to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Typewriter effect */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid #4BB4FF;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blinkingCursor 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Hide scrollbars but keep functionality */
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Add shimmer animation for the buttons */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* Project images styling */
+.project-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.project-image-wrapper:hover .project-image {
+  transform: scale(1.1);
+}
+
+/* Tiny Hoopers specific styling */
+[id="tiny-hoopers"] .project-image-wrapper img {
+  transition: all 0.3s ease-out;
+  border-radius: 4px;
+}
+
+[id="tiny-hoopers"] .project-image-wrapper:hover img {
+  transform: scale(1.02) !important;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Clean up unused styles */
+
+/* Adjust scrolling behavior */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Adding smooth scrolling on click but not on page load */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Initial page load or refresh should skip animations */
+  .no-scroll-animation {
+    scroll-behavior: auto;
+  }
 }
