@@ -1,3 +1,8 @@
+/**
+ * Portfolio website layout
+ * I love Jelena najvise ❤️
+ */
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
