@@ -325,14 +325,6 @@ export const HeroSection = () => {
                   <span className="text-[#4BB4FF] opacity-40 text-2xl absolute -left-6 top-0 hidden md:block">"</span>
                   Senior QA Engineer & Developer with a passion for creating innovative solutions and delivering high-quality software.
                   <span className="text-[#4BB4FF] opacity-40 text-2xl absolute -right-6 bottom-0 hidden md:block">"</span>
-                  <motion.span 
-                    className="block mt-4 text-[#4BB4FF] italic opacity-80 text-base"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: [0.7, 1, 0.7] }}
-                    transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", delay: 1 }}
-                  >
-                    I love Jelena najvise ❤️
-                  </motion.span>
                 </p>
               </div>
             </motion.div>
